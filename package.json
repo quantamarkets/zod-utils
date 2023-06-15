@@ -1,8 +1,11 @@
 {
+  "name": "@morgs32/zod-utils",
+  "author": "Morgan Intrator",
   "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "module": "dist/zod-utils.esm.js",
   "files": [
     "dist",
     "src"
@@ -11,17 +14,16 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "build": "tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts",
+    "watch": "tsc && vite build --watch",
+    "test": "vitest test",
+    "lint": "eslint ./src/**",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "pnpm lint"
     }
   },
   "prettier": {
@@ -30,9 +32,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "zod-utils",
-  "author": "Morgan",
-  "module": "dist/zod-utils.esm.js",
   "size-limit": [
     {
       "path": "dist/zod-utils.cjs.production.min.js",
@@ -46,10 +45,15 @@
   "devDependencies": {
     "@morgs32/eslint-config": "^1.0.3",
     "@size-limit/preset-small-lib": "^8.2.4",
+    "@types/jest": "^29.4.0",
     "husky": "^8.0.3",
     "size-limit": "^8.2.4",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.5.3",
-    "typescript": "^3.9.10"
+    "typescript": "^5.1.3",
+    "vite": "^4.3.9",
+    "vitest": "^0.32.0",
+    "zod": "^3.21.4"
+  },
+  "peerDependencies": {
+    "zod": "^3.21.4"
   }
 }
