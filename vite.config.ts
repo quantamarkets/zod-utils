@@ -1,18 +1,25 @@
-import path from "path";
-import { defineConfig } from "vite";
+// / <reference types="vitest" />
+import { defineConfig } from 'vite';
 
-export default defineConfig({
-  base: "./",
+const fileName = {
+  es: 'index.mjs',
+  cjs: 'index.cjs',
+  iife: 'index.iife.js',
+};
+
+const formats = Object.keys(fileName) as Array<keyof typeof fileName>;
+
+module.exports = defineConfig({
+  base: './',
   build: {
-    sourcemap: true,
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "lib",
-      formats: ["es", "cjs", "umd", "iife"],
-      fileName: (format) => `index.${format}.js`,
-    },
-    rollupOptions: {
-      external: ["zod"],
+      entry: 'src/index.ts',
+      name: 'lib',
+      formats,
+      fileName: (format) => fileName[format],
     },
   },
+  test: {
+
+  }
 });

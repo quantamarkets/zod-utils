@@ -3,9 +3,15 @@
   "author": "Morgan Intrator",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
-  "module": "dist/zod-utils.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
   "files": [
     "dist",
     "src"
@@ -46,6 +52,7 @@
     "@morgs32/eslint-config": "^1.0.3",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@types/jest": "^29.4.0",
+    "dts-bundle-generator": "^8.0.1",
     "husky": "^8.0.3",
     "size-limit": "^8.2.4",
     "typescript": "^5.1.3",
