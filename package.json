@@ -1,5 +1,5 @@
 {
-  "name": "@morgs32/zod-utils",
+  "name": "zod-utils",
   "author": "Morgan Intrator",
   "version": "0.1.2",
   "license": "MIT",
@@ -39,11 +39,11 @@
   },
   "size-limit": [
     {
-      "path": "dist/zod-utils.cjs.production.min.js",
+      "path": "dist/index.cjs",
       "limit": "10 KB"
     },
     {
-      "path": "dist/zod-utils.esm.js",
+      "path": "dist/index.mjs",
       "limit": "10 KB"
     }
   ],
