@@ -20,6 +20,7 @@ module.exports = defineConfig({
     },
   },
   test: {
-
-  }
+    include: ['**/*.test.ts'],
+    globals: true
+  },
 });
