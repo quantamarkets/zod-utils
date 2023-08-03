@@ -49,15 +49,22 @@ type DeepReplaceOrNullable<T, U> =
             ? T | null
             : T
 
-  
-export const makeCoerceFn = <D, S extends z.ZodTypeAny>(schema: S, defaultValue?: D | null) => {
-  const coercedSchema = coerceZod(schema, defaultValue)
-  return function(v: any) {
-    return coercedSchema.parse(v)
-  }
+
+export const incomplete = <D, S extends z.ZodTypeAny>(props: {
+  schema: S
+  defaultValue?: D | null
+  value: any
+}) => {
+  const {
+    schema,
+    defaultValue,
+    value 
+  } = props
+  const incompletedSchema = incompleteZod(schema, defaultValue)
+  return incompletedSchema.parse(value)
 }
 
-const coerceZod = <D, S extends z.ZodTypeAny>(
+const incompleteZod = <D, S extends z.ZodTypeAny>(
   schema: S, 
   defaultValue?: D | null,
   keys: Array<string> = []
@@ -76,7 +83,7 @@ const coerceZod = <D, S extends z.ZodTypeAny>(
       for (const key in shape) {
         const zodTypeAtKey = shape[key]
         const defaultValueAtKey = defaultValue ? (defaultValue as any)[key] : undefined
-        properties[key] = coerceZod(zodTypeAtKey, defaultValueAtKey, [...keys, key])
+        properties[key] = incompleteZod(zodTypeAtKey, defaultValueAtKey, [...keys, key])
       }
       // @ts-ignore
       return z.any()
@@ -101,7 +108,7 @@ const coerceZod = <D, S extends z.ZodTypeAny>(
             return z.array(
               z.any()
                 .transform((e) => {
-                  return coerceZod(zodDef.type).parse(e)
+                  return incompleteZod(zodDef.type).parse(e)
                 })
             ).parse(v)
           }

@@ -1,16 +1,16 @@
 {
   "name": "zod-utils",
   "author": "Morgan Intrator",
-  "version": "0.1.5",
+  "version": "0.1.27",
   "license": "MIT",
-  "main": "dist/index.cjs",
-  "module": "dist/index.mjs",
-  "typings": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs",
+    "module": "./dist/index.esm.js",
+    "require": "./dist/index.js"
   },
   "files": [
     "dist"
@@ -19,10 +19,12 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "tsc && vite build && dts-bundle-generator --config ./dts-bundle-generator.config.ts",
-    "watch": "tsc && vite build --watch",
-    "test": "vitest test",
-    "lint": "eslint ./src/**",
+    "watch": "bunchee -w",
+    "build": "bunchee",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest",
+    "clean": "rimraf dist",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
@@ -47,11 +49,16 @@
       "limit": "10 KB"
     }
   ],
+  "eslintConfig": {
+    "extends": [
+      "@morgs32/eslint-config"
+    ]
+  },
   "devDependencies": {
     "@morgs32/eslint-config": "^1.0.3",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@types/jest": "^29.4.0",
-    "dts-bundle-generator": "^8.0.1",
+    "bunchee": "^3.5.0",
     "husky": "^8.0.3",
     "size-limit": "^8.2.4",
     "typescript": "^5.1.3",

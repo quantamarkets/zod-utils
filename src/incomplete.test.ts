@@ -1,31 +1,39 @@
 import { z } from 'zod';
-import { makeCoerceFn } from './makeCoerceFn';
+import { incomplete } from './incomplete';
 
-describe('coerce', () => {
+describe('incomplete', () => {
   it('no default param, no object', async () => {
-    const result = makeCoerceFn(z.string())(undefined);
+    const result = incomplete({
+      schema: z.string(),
+      value: undefined,
+    });
 
     expect(result).toEqual(null);
   });
   it('no object, with default', async () => {
-    const result = makeCoerceFn(z.string(), '')(undefined);
+    const result = incomplete({
+      schema: z.string(),
+      defaultValue: '',
+      value: undefined,
+    });
 
     expect(result).toEqual('');
   });
   it('no default param', async () => {
-    const result = makeCoerceFn(
-      z.object({
+    const result = incomplete({
+      schema: z.object({
         foo: z.string(),
-      })
-    )({});
+      }),
+      value: {},
+    })
 
     expect(result).toEqual({
       foo: null,
     });
   });
   it('no default param and nested objects', async () => {
-    const result = makeCoerceFn(
-      z.object({
+    const result = incomplete({
+      schema: z.object({
         foo: z.string(),
         bar: z.object({
           baz: z.object({
@@ -33,8 +41,9 @@ describe('coerce', () => {
           }),
         }),
       }),
-      null
-    )({});
+      defaultValue: null,
+      value: {},
+    })
 
     expect(result).toEqual({
       foo: null,
@@ -62,35 +71,39 @@ describe('coerce', () => {
         }),
       }),
     });
-    const values = makeCoerceFn(schema, {
-      str: 'str',
-      arr: ['arr'],
-      num: 1,
-      obj: {
+    const values = incomplete({
+      schema, 
+      defaultValue: {
         str: 'str',
         arr: ['arr'],
         num: 1,
-        obj2: {
+        obj: {
           str: 'str',
           arr: ['arr'],
           num: 1,
+          obj2: {
+            str: 'str',
+            arr: ['arr'],
+            num: 1,
+          },
         },
       },
-    })({});
+      value: {}
+    });
 
     expect(values).toMatchInlineSnapshot(`
-      Object {
-        "arr": Array [
+      {
+        "arr": [
           "arr",
         ],
         "num": 1,
-        "obj": Object {
-          "arr": Array [
+        "obj": {
+          "arr": [
             "arr",
           ],
           "num": 1,
-          "obj2": Object {
-            "arr": Array [
+          "obj2": {
+            "arr": [
               "arr",
             ],
             "num": 1,
@@ -115,18 +128,22 @@ describe('coerce', () => {
       }),
     });
 
-    const values = makeCoerceFn(ZSchema, {
-      foo: 'foo',
-      enum: 'a',
-    })('');
+    const values = incomplete({
+      schema: ZSchema,
+      defaultValue: {
+        foo: 'foo',
+        enum: 'a',
+      },
+      value: {},
+    })
 
     expect(values).toMatchInlineSnapshot(`
-      Object {
+      {
         "enum": "a",
         "foo": "foo",
-        "obj": Object {
+        "obj": {
           "a": null,
-          "b": Object {
+          "b": {
             "c": null,
           },
         },
@@ -144,18 +161,21 @@ describe('coerce', () => {
       ),
     });
 
-    const values = makeCoerceFn(ZSchema)({
-      foo: [
-        {
-          a: 'a',
-        },
-      ],
-    });
+    const values = incomplete({
+      schema: ZSchema,
+      value: {
+        foo: [
+          {
+            a: 'a',
+          },
+        ],
+      }
+    })
 
     expect(values).toMatchInlineSnapshot(`
-      Object {
-        "foo": Array [
-          Object {
+      {
+        "foo": [
+          {
             "a": "a",
             "b": null,
           },
