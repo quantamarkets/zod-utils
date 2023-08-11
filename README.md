@@ -1,9 +1,14 @@
-# zod-utils
+![zod-utils](./zod-utils.png)
 
 This is a collection of utility methods that are handy when working with zod.
 
+- [Getting started](#getting-started)
+- [`zutils.incomplete()`](#zutilsincomplete)
+- [`zutils.implement()`](#zutilsimplement)
+- [`zutils.validate()`](#zutilsvalidate)
 
-# Getting Started
+
+## Getting started
 
 ```
 pnpm add zod-utils
@@ -16,7 +21,7 @@ import { zutils } from 'zod-utils'zutils.
 ```
 
 
-## incomplete
+## `zutils.incomplete()`
 
 Calling this function with a zod schema and a value to parse and it will spit out an object with `null` on any (nested) property that is not valid.
 
@@ -55,7 +60,7 @@ Also it's great for query parameters from a url. Using `incomplete` we can keep 
 
 TODO: Add an example
 
-## implement
+## `zutils.implement()`
 
 Use this function to make sure your zod schemas implement a given type definition.
 
@@ -66,7 +71,7 @@ zutils.implement<string>()(z.string())
 zutils.implement<string>()(z.number())
 ```
 
-## validate
+## `zutils.validate()`
 
 Use this to do a type assertion with your schema. Use it in an if statement to discriminate the type inside that scope.
 
