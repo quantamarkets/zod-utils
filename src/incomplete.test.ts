@@ -25,7 +25,7 @@ describe('incomplete', () => {
         foo: z.string(),
       }),
       value: {},
-    })
+    });
 
     expect(result).toEqual({
       foo: null,
@@ -43,7 +43,7 @@ describe('incomplete', () => {
       }),
       defaultValue: null,
       value: {},
-    })
+    });
 
     expect(result).toEqual({
       foo: null,
@@ -72,7 +72,7 @@ describe('incomplete', () => {
       }),
     });
     const values = incomplete({
-      schema, 
+      schema,
       defaultValue: {
         str: 'str',
         arr: ['arr'],
@@ -88,7 +88,7 @@ describe('incomplete', () => {
           },
         },
       },
-      value: {}
+      value: {},
     });
 
     expect(values).toMatchInlineSnapshot(`
@@ -135,7 +135,7 @@ describe('incomplete', () => {
         enum: 'a',
       },
       value: {},
-    })
+    });
 
     expect(values).toMatchInlineSnapshot(`
       {
@@ -169,8 +169,8 @@ describe('incomplete', () => {
             a: 'a',
           },
         ],
-      }
-    })
+      },
+    });
 
     expect(values).toMatchInlineSnapshot(`
       {

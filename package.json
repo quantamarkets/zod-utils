@@ -52,10 +52,16 @@
   "eslintConfig": {
     "extends": [
       "@morgs32/eslint-config"
+    ],
+    "rules": {
+      "@next/next/no-html-link-for-pages": 0
+    },
+    "ignorePatterns": [
+      "dist"
     ]
   },
   "devDependencies": {
-    "@morgs32/eslint-config": "^1.0.3",
+    "@morgs32/eslint-config": "^2.0.10",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@types/jest": "^29.4.0",
     "bunchee": "^3.5.0",

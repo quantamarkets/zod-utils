@@ -6,6 +6,7 @@ This is a collection of utility methods that are handy when working with zod.
 - [`zutils.incomplete()`](#zutilsincomplete)
 - [`zutils.implement()`](#zutilsimplement)
 - [`zutils.validate()`](#zutilsvalidate)
+- [`zutils.check()`](#zutilscheck)
 
 
 ## Getting started
@@ -81,5 +82,23 @@ let val: any
 if (zutils.validate(schema, val)) {
   return val // val is a string in in this scope
 }
+```
+
+## `zutils.check()`
+
+So `zutils.implement` makes sure that your schema *extends your type*. This command will make sure that a type *extends your schema*. 
+
+Use case:
+
+```
+interface FOOBAR {
+  foo?: 'bar'
+}
+const schema = zutils.implement<FOOBAR>()(
+  z.object({
+    foo: z.literal('bar') // NOTE: this isn't optional, yet no TS error
+  })
+)
+zutils.check(schema, { foo: 'bar' } as FOOBAR) // TS error!
 ```
 

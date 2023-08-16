@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { server } from 'zod-sdk/server'
+import { z } from 'zod';
+import { server } from 'zod-sdk/server';
 
 export const routes = {
   hello: server.makeQuery(
@@ -15,6 +15,6 @@ export const routes = {
       }),
     }
   ),
-}
+};
 
-export type IRoutes = typeof routes
+export type IRoutes = typeof routes;

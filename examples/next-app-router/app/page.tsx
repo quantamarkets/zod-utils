@@ -1,6 +1,6 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import { Data } from './Data'
+import Image from 'next/image';
+import styles from './page.module.css';
+import { Data } from './Data';
 
 export default function Home() {
   return (
@@ -85,5 +85,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
