@@ -10,25 +10,22 @@ type DeepNullable<T> = T extends Date
     }
   : T | null;
 
-type DeepUnparseDates<T> = T extends Date
-  ? Date | string
+export type DeepPartialAndNullable<T> = T extends Date
+  ? Date | null | undefined
   : T extends Array<any>
-  ? Array<DeepUnparseDates<T[0]>>
+  ? Array<DeepPartialAndNullable<T[0]>>
   : T extends object
   ? {
-      [K in keyof T]: DeepUnparseDates<T[K]>;
+      [K in keyof T]?: DeepPartialAndNullable<T[K]>;
     }
-  : T;
+  : T | null | undefined;
 
-/**
- * If U does not exist, we STILL want to replace T with DeepPartialNullable<T>
- */
 type DeepReplaceOrNullable<T, U> = T extends Date
   ? U extends Date
     ? Date
     : Date | null
   : T extends Array<any>
-  ? Array<DeepUnparseDates<T[0]>>
+  ? Array<T[0]>
   : T extends object
   ? U extends object
     ? {
@@ -44,6 +41,11 @@ type DeepReplaceOrNullable<T, U> = T extends Date
   : U extends undefined
   ? T | null
   : T;
+
+export type inferIncomplete<
+  S extends z.ZodTypeAny,
+  D extends DeepPartialAndNullable<z.infer<S>>,
+> = z.infer<ReturnType<typeof incompleteZod<D, S>>>;
 
 export const incomplete = <D, S extends z.ZodTypeAny>(props: {
   schema: S;
