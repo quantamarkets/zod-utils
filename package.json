@@ -26,7 +26,8 @@
     "test": "vitest",
     "clean": "rimraf dist",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "prepublish": "pnpm build"
   },
   "husky": {
     "hooks": {
