@@ -4,3 +4,4 @@ export { formik } from './formik';
 export { validate } from './validate';
 export { implement } from './implement';
 export { check } from './check';
+export type { IHandlePartialTuples } from './check';
