@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { incomplete } from './incomplete';
+import { coerceAllDates } from './coerceAllDates';
 
 describe('incomplete', () => {
   it('no default param, no object', async () => {
@@ -180,6 +181,30 @@ describe('incomplete', () => {
             "b": null,
           },
         ],
+      }
+    `);
+  });
+
+  it('with an empty array', () => {
+    const ZSchema = z.object({
+      foo: z.array(z.string()),
+    });
+
+    const values = incomplete({
+      schema: coerceAllDates(
+        ZSchema.extend({
+          bar: z.string(),
+        })
+      ),
+      value: {
+        foo: null,
+      },
+    });
+
+    expect(values).toMatchInlineSnapshot(`
+      {
+        "bar": null,
+        "foo": [],
       }
     `);
   });
