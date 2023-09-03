@@ -35,25 +35,31 @@ describe('incomplete', () => {
   it('no default param and nested objects', async () => {
     const result = incomplete({
       schema: z.object({
-        foo: z.string(),
-        bar: z.object({
-          baz: z.object({
-            buz: z.string(),
+        string: z.string(),
+        nested1: z.object({
+          nested2: z.object({
+            string: z.string(),
+            array: z.array(z.string()),
+            enum: z.enum(['a', 'b', 'c']),
           }),
         }),
       }),
       defaultValue: null,
-      value: {},
+      value: null,
     });
 
-    expect(result).toEqual({
-      foo: null,
-      bar: {
-        baz: {
-          buz: null,
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "nested1": {
+          "nested2": {
+            "array": [],
+            "enum": null,
+            "string": null,
+          },
         },
-      },
-    });
+        "string": null,
+      }
+    `);
   });
 
   it('with default', () => {
