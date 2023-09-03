@@ -29,7 +29,7 @@ Calling this function with a zod schema and a value to parse and it will spit ou
 
 
 ```
-const result = incomplete({
+const result = zutils.incomplete({
   schema: z.object({
     string: z.string(),
     nested1: z.object({
