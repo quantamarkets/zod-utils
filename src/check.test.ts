@@ -30,6 +30,12 @@ describe('check', () => {
     check(schema, {} as Props);
   });
 
+  it('handles arrays', () => {
+    const schema = z.string().array();
+
+    check(schema, {} as any as string[]);
+  });
+
   it('handles optional params', () => {
     function main(foo?: string) {
       return foo;
